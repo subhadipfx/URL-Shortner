@@ -1,0 +1,135 @@
+<div class="body-height">
+<div class="row" >
+    <div class="col-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand text-white" href="#">AgentFx</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <div></div>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Short-URL ID" aria-label="Search">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Track</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="row center"  >
+    <div class="col-4">
+
+    </div>
+    <div class="col-4 text-center container align-content-center ">
+        <button class=" btn btn-block btn-outline-primary" data-toggle="modal" data-target="#signinModal">Sign In</button>
+        <button class="btn btn-block btn-outline-danger" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+    </div>
+    <div class="col-4">
+
+    </div>
+</div>
+</div>
+<!--Modals-->
+<!--SignIn-->
+<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Sign In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <form method="post" action="/user/signin">
+                   <div class="form-group">
+                       <label for="email" class="text-white">Email:</label>
+                       <input id="email" name="email" type="email" class="form-control" required>
+                   </div>
+                   <div class="form-group">
+                       <label for="password" class="text-white">Password:</label>
+                       <input id="password" name="password" type="password" class="form-control" required>
+                   </div>
+                   <hr>
+                   <div class="text-center">
+                       <button class="btn btn-primary" type="submit">Sign In</button>
+                   </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--SignUp-->
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Welcome</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/user/signup">
+                    <div class="form-group">
+                        <label for="firstName" class="text-white">First Name:</label>
+                        <input id="firstName" name="firstName" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="text-white">Last Name:</label>
+                        <input id="lastName" name="lastName" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="text-white">Email:</label>
+                        <input id="email" name="email" type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group" class="text-white">
+                        <label for="password" class="text-white">Password:</label>
+                        <input id="password" name="password" type="password" class="form-control" required>
+                    </div>
+                    <div class="text-center" class="text-white">
+                        <button class="btn btn-danger" type="submit">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .body-height{
+        height: 100vh;
+    }
+    .center{
+        display: flex;
+        height: calc(100% - 56px);
+        justify-content: center;
+        align-items: center;
+        background: #141E30;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .navbar{
+        background: #3a7bd5;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .modal-body{
+        background: #3a7bd5;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .modal-header{
+        background: #141E30;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+</style>
