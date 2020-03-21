@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const URLData = new mongoose.Schema({
+const URLSchema = new mongoose.Schema({
     short_url:{
         type: String,
         unique: true,
@@ -14,6 +14,14 @@ const URLData = new mongoose.Schema({
     user_id:{
         type: String,
         required: true
+    },
+    status:{
+        type: String,
+        required: true
+    },
+    exp_date:{
+        type: Date,
+        required: true
     }
 },
 {
@@ -23,4 +31,5 @@ const URLData = new mongoose.Schema({
     }
 }
 );
-module.exports = User = mongoose.model('URLData',URLData);
+
+module.exports = User = mongoose.model('URLData',URLSchema);

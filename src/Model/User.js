@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
     firstName:{
@@ -23,6 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     seq:{
         type:Number,
+        default: 0,
         required: true
     }
 },
@@ -44,18 +44,6 @@ userSchema.pre('save',async function(next) {
     next();
 });
 
-// userSchema.methods.generateAuthToken = async () => {
-//     try{
-//         const user = this;
-//         const token = jwt.sign({_id: user.id},process.env.JWT_KEY);
-//         user.tokens = user.tokens.concat({token});
-//         await user.save();
-//         console.log('after save');
-//         return token;
-//     }catch (e) {
-//         throw new Error(e);
-//     }
-// };
 
 userSchema.statics.findByCredentials = async (email,password) => {
     const user = await User.findOne({email});
@@ -67,6 +55,14 @@ userSchema.statics.findByCredentials = async (email,password) => {
       throw new Error('Invalid login credentials')
   }
   return user;
+};
+
+userSchema.statics.validate = async function (body) {
+    if(("firstName" in body) && ("lastName" in body) && ("email" in body) && ("password" in body)){
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(body.email);
+    }
+    return false;
 };
 
 const User = mongoose.model('User',userSchema);

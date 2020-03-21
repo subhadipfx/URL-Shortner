@@ -3,8 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if(req.isAuthenticated){
-    res.render('index', { title: 'Fx-URL' ,user:'AgentFx'});
+  if(req.isAuthenticated()){
+    console.log(req.isAuthenticated());
+    res.redirect('/user/profile');
   }else{
     res.render('index', { title: 'Fx-URL' });
   }

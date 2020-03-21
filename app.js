@@ -3,27 +3,26 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const expressHandelbars = require("express-handlebars");
 const useragent = require('express-useragent');
 const expressip = require('express-ip');
 const flash = require('express-flash');
 const session = require('express-session');
 const passport = require('passport');
 const auth = require('./src/middleware/passport-config');
+const hbs = require('./src/middleware/handelbars');
 const connectDB = require('./src/db/connection');
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const URLRouter = require('./routes/urls');
+require('./src/Crons/cron_job');
 
+const indexRouter = require('./routes/index');
+const authRouter = require('./routes/authRouter');
+const URLRouter = require('./routes/URLRouter');
+const profileRouter = require('./routes/profileRouter');
+const redirectRouter = require('./routes/redirectRouter');
 const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.engine("hbs", expressHandelbars({
-  extname : "hbs",
-  defaultLayout: "layout",
-  layoutsDir: __dirname + "/views"
-}));
+app.engine("hbs", hbs.engine);
 app.use(useragent.express());
 app.use(expressip().getIpInfoMiddleware);
 app.use(logger('dev'));
@@ -40,8 +39,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
+app.use('/user', authRouter);
 app.use('/url',URLRouter);
+app.use('/user/profile',profileRouter);
+app.use(redirectRouter);
 auth(passport);
 connectDB();
 // catch 404 and forward to error handler

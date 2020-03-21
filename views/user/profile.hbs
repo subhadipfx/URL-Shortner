@@ -1,6 +1,6 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand text-white" href="#">AgentFx</a>
+        <a class="navbar-brand text-white" href="/">{{name}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,12 +10,17 @@
                 <li class="nav-item active">
                     <a class="nav-link text-white" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-white" data-toggle="modal" data-target="#historyModal">URL History<span class="sr-only">(current)</span></a>
+                </li>
             </ul>
-            <div></div>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Short-URL ID" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method="get" action="/url/track">
+                <input class="form-control mr-sm-2" type="text" name="url" placeholder="Short-URL ID" required>
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Track</button>
             </form>
+            <div class="p-1">
+                <a href="/user/profile/signout" class="btn btn-danger" > Sign out</a>
+            </div>
         </div>
     </nav>
 </div>
@@ -26,7 +31,7 @@
         <div class="col-6">
                 <form class="text-right" method="post" action="/url/create-url">
                     <div class="form-group">
-                        <input id="url" name="url" class="form-control" placeholder="Enter Long URL">
+                        <input id="url" name="url" class="form-control" placeholder="Enter Long URL" required>
                     </div>
                     <button type="submit" class="btn btn-outline-danger">Shorten URL</button>
                 </form>
@@ -37,7 +42,48 @@
     </div>
 </div>
 
+<!--Modals-->
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">URL History</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Short URL ID</th>
+                            <th>Long URL</th>
+                            <th>Status</th>
+                            <th>Expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each urls}}
+                            <tr>
+                                <td>{{date_helper this.created_at}}</td>
+                                <td>{{this.short_url}}</td>
+                                <td><a href="{{this.long_url}}">{{trim_helper this.long_url}}...</a></td>
+                                <td>{{this.status}}</td>
+                                <td>{{date_helper this.exp_date}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
+    .modal-dialog{
+        max-width: 90%;
+    }
+    .modal-content{
+        overflow-x: auto !important;
+    }
     .center{
         display: flex;
         height: 92vh;
